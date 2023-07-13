@@ -1,0 +1,28 @@
+{
+  "name": "blucher-mobile",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "tauri": "tauri"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "solid-js": "^1.7.0",
+    "@tauri-apps/api": "^2.0.0-alpha.4",
+    "@tauri-apps/plugin-window": "^2.0.0-alpha.0",
+    "@tauri-apps/plugin-shell": "^2.0.0-alpha.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.10",
+    "typescript": "^4.9.5",
+    "vite": "^4.2.1",
+    "vite-plugin-solid": "^2.5.0",
+    "@tauri-apps/cli": "^2.0.0-alpha.9",
+    "internal-ip": "^7.0.0"
+  }
+}
