@@ -1,17 +1,33 @@
 import { createSignal } from "solid-js";
 import logo from "./assets/logo.svg";
 import { invoke } from "@tauri-apps/api/tauri";
+import { listen } from "@tauri-apps/api/event";
 import "./App.css";
 
-function App() {
-  const [greetMsg, setGreetMsg] = createSignal("");
-  const [name, setName] = createSignal("");
+await listen<Payload>('input_update', (event) => {
+  let input = event.payload;
+  console.log("Payload: " + input.message);
+  setUpdate(input.message);
+  greet(input.message);
+})
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name: name() }));
+class Payload {
+  message: string;
+
+  public constructor(message: string) {
+    this.message = message;
   }
+}
 
+const [update, setUpdate] = createSignal("");
+const [greetMsg, setGreetMsg] = createSignal("");
+const [name, setName] = createSignal("");
+
+async function greet(message: string) {
+  setGreetMsg(await invoke("on_command", { message }));
+}
+
+function App() {
   return (
     <div class="container">
       <h1>Welcome to Tauri!</h1>
@@ -34,7 +50,7 @@ function App() {
         class="row"
         onSubmit={(e) => {
           e.preventDefault();
-          greet();
+          greet("Hello");
         }}
       >
         <input
@@ -45,7 +61,7 @@ function App() {
         <button type="submit">Greet</button>
       </form>
 
-      <p>{greetMsg()}</p>
+      <p>{update()}</p>
     </div>
   );
 }
